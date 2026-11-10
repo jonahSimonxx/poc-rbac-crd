@@ -113,6 +113,7 @@ Ningún rol puede editar ni borrar la auditoría: no es un permiso de la matriz,
 Se implementó una prueba de concepto ejecutable sobre Next.js 16 + PostgreSQL 18 (no es el sistema final; sirve para validar las decisiones antes de Strapi).
 
 **Repositorio público:** <https://github.com/jonahSimonxx/poc-rbac-crd> — código, esquema, datos sintéticos y esta documentación.
+**Diagramas UML:** <https://github.com/jonahSimonxx/poc-rbac-crd/tree/main/docs/diagramas> — casos de uso, modelo de datos, secuencia, estados y actividad.
 
 | Verificación | Resultado |
 |---|---|

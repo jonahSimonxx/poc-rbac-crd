@@ -8,6 +8,8 @@
 **Documento relacionado:** [`adr/ADR-001-modelo-roles-y-asignaciones.md`](./adr/ADR-001-modelo-roles-y-asignaciones.md)
 
 > **Versión corta para revisión:** [`roles-y-permisos-revision.md`](./roles-y-permisos-revision.md) — 5 decisiones a validar, matriz y reglas clave en 6 páginas.
+>
+> **Diagramas UML:** <https://github.com/jonahSimonxx/poc-rbac-crd/tree/main/docs/diagramas> — casos de uso, modelo de datos, secuencia, estados y actividad.
 
 ---
 

@@ -16,6 +16,31 @@ trasladarlas a Strapi 5 + Next.js 16.
 | [`docs/adr/ADR-001-modelo-roles-y-asignaciones.md`](docs/adr/ADR-001-modelo-roles-y-asignaciones.md) | Decisión de arquitectura y criterios de aceptación |
 | [`docs/plan-implementacion-rbac.md`](docs/plan-implementacion-rbac.md) | Cronograma de una semana y ruta completa de referencia |
 | [`docs/preguntas-tutor.md`](docs/preguntas-tutor.md) | Decisiones pendientes con el tutor |
+| [`docs/diagramas/`](docs/diagramas/) | Diagramas UML: casos de uso, modelo de datos, secuencia, estados y actividad |
+| [`docs/capturas/`](docs/capturas/) | Capturas de la POC en ejecución |
+
+## Capturas de pantalla
+
+Todas las capturas están en [`docs/capturas/`](docs/capturas/). Estas tres
+resumen el modelo:
+
+| Panel del administrador | Paciente, identidad y CRD | Acceso cruzado denegado |
+|---|---|---|
+| ![Panel del administrador](docs/capturas/02-panel-administrador.png) | ![Detalle del paciente](docs/capturas/08-paciente-detalle.png) | ![Acceso denegado](docs/capturas/11-acceso-cruzado-denegado.png) |
+| Sin datos clínicos | Identidad separada del cuaderno | El intento queda auditado |
+
+## Diagramas UML
+
+Los diagramas y sus fuentes están en [`docs/diagramas/`](docs/diagramas/).
+
+| Casos de uso por rol | Modelo de datos |
+|---|---|
+| ![Casos de uso](docs/diagramas/casos-de-uso.png) | ![Modelo de datos](docs/diagramas/modelo-datos.png) |
+| Qué puede hacer cada rol | Asignación como fuente de verdad de roles |
+
+También hay diagramas de **secuencia** (autorización de una petición),
+**estados** (ciclo de vida de un CRD) y **actividad** (alta, cambio y baja de
+una asignación).
 
 ## Stack
 
@@ -114,6 +139,7 @@ los valores son inventados.
 | `npm test` | 31 pruebas del motor de política, ámbito y auditoría |
 | `npm run matriz` | Imprime la matriz de 35 permisos por rol |
 | `npm run seed` | Regenera `db/04-seed.sql` |
+| `node scripts/capturas.mjs` | Regenera las capturas de `docs/capturas/` con Microsoft Edge |
 
 ## Estructura
 
@@ -125,7 +151,8 @@ src/core/       Catálogo, motor de política, ámbito y auditoría (independien
 src/cli/        Matriz imprimible
 test/           Pruebas unitarias
 db/             Roles, esquema, privilegios y seed
-docs/           Documentación de roles, ADR y plan
+scripts/        Capturas de pantalla de la POC
+docs/           Documentación, diagramas UML y capturas
 ```
 
 > Las contraseñas de base y de los usuarios demo son **credenciales locales de
