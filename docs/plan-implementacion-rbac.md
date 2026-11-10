@@ -196,6 +196,8 @@ El periodo comprometido es **una semana de cierre (5 días hábiles) contada des
 
 **Criterio de aceptación de la semana:** el tutor valida el modelo, el repositorio está publicado y la demostración recorre los casos de acceso sin fallos.
 
+> **Estado:** el repositorio ya está publicado en <https://github.com/jonahSimonxx/poc-rbac-crd>.
+
 ### 5.1 Qué no entra en la semana
 
 - Integración con Strapi (fase posterior).
