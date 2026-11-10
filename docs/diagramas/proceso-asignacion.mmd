@@ -1,0 +1,36 @@
+%% Proceso de alta, cambio y baja de una asignación de rol.
+%% Carriles por responsable: jefe de estudio y sys-admin.
+flowchart TD
+  classDef jefe fill:#e7f3eb,stroke:#2f7d4f,color:#14301f
+  classDef admin fill:#fbf1de,stroke:#a9761f,color:#3a2a09
+  classDef sistema fill:#e6eef4,stroke:#1f6f8b,color:#123
+  classDef fin fill:#0f3d5c,color:#ffffff,stroke:#0f3d5c
+
+  subgraph CARRIL_J["Jefe de estudio"]
+    A([Solicita incorporar a una persona]):::jefe
+    B([Informa el rol que necesita]):::jefe
+  end
+
+  subgraph CARRIL_A["sys-admin"]
+    C{¿Existe la cuenta?}:::admin
+    D[Crear usuario]:::admin
+    E[Crear asignación usuario + estudio + rol]:::admin
+    H{¿Cambio de rol o baja?}:::admin
+    I[Revocar asignación anterior]:::admin
+    J[Nueva asignación con el rol correcto]:::admin
+    K[Marcar activa = false]:::admin
+  end
+
+  subgraph CARRIL_S["Sistema"]
+    F[Auditoría: asignacion:create]:::sistema
+    G([Acceso limitado a ese estudio]):::fin
+    L([Efecto en la siguiente petición]):::fin
+  end
+
+  A --> B --> C
+  C -- No --> D --> E
+  C -- Sí --> E
+  E --> F --> G
+  G --> H
+  H -- Cambio --> I --> J --> F
+  H -- Baja --> K --> L --> F

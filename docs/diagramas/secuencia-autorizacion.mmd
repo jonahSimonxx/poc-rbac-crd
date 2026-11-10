@@ -1,0 +1,38 @@
+%% Secuencia de autorización de una petición clínica.
+%% Una sola capa de decisión en el servidor; deny by default.
+sequenceDiagram
+  autonumber
+  actor U as Usuario
+  participant N as Navegador
+  participant R as Ruta Next.js
+  participant G as guard.ts
+  participant P as Motor de política
+  participant DB as PostgreSQL
+  participant A as Auditoría
+
+  U->>N: Abre /pacientes/{id}
+  N->>R: GET con cookie de sesión
+  R->>G: requireSesion()
+  G->>DB: SELECT usuario + asignaciones activas
+  DB-->>G: rol_codigo y estudios
+
+  alt Sin sesión válida
+    G-->>N: 307 a /login
+  else Sesión válida sin asignación activa
+    G->>A: registrar denegación
+    G-->>N: Acceso restringido
+  else Con asignación activa
+    R->>P: decidir(sesión, "paciente:read", recurso)
+    P->>P: 1. ¿El rol concede el permiso?
+    P->>P: 2. ¿El recurso cae en su ámbito?
+    P-->>R: permitido + motivo
+    alt Permitido
+      R->>DB: SELECT paciente, CRD, dosis
+      DB-->>R: datos del estudio
+      R->>A: registrar acceso permitido
+      R-->>N: 200 HTML
+    else Denegado
+      R->>A: registrar denegación
+      R-->>N: Acceso restringido
+    end
+  end

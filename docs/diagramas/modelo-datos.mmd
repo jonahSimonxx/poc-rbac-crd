@@ -1,0 +1,113 @@
+%% Modelo de datos del CRD y del control de acceso.
+%% La asignación es la única fuente de verdad de los roles.
+classDiagram
+  direction LR
+
+  class Rol {
+    text codigo PK
+    text nombre
+    text descripcion
+  }
+
+  class Usuario {
+    uuid id PK
+    text email UK
+    text nombre
+    text estado
+  }
+
+  class Asignacion {
+    uuid id PK
+    uuid usuario_id FK
+    uuid estudio_id FK
+    text rol_codigo FK
+    bool activa
+    timestamptz desde
+    timestamptz hasta
+    text motivo_revocacion
+  }
+
+  class Estudio {
+    uuid id PK
+    text codigo UK
+    text nombre
+    text estado
+  }
+
+  class Sitio {
+    uuid id PK
+    uuid estudio_id FK
+    text codigo
+    text nombre
+  }
+
+  class Paciente {
+    uuid id PK
+    uuid estudio_id FK
+    uuid sitio_id FK
+    text codigo UK
+    bool anulado
+    text motivo_anulacion
+  }
+
+  class IdentidadPaciente {
+    uuid paciente_id PK
+    text nombre
+    text documento
+    text telefono
+    bool consentimiento_firmado
+  }
+
+  class CRD {
+    uuid id PK
+    uuid paciente_id FK
+    text tipo
+    int visita
+    text estado
+    uuid firmado_por FK
+    timestamptz firmado_en
+  }
+
+  class Dosis {
+    uuid id PK
+    uuid paciente_id FK
+    int numero_toma
+    numeric dosis_mg
+    text lote
+  }
+
+  class EventoAdverso {
+    uuid id PK
+    uuid paciente_id FK
+    text descripcion
+    text gravedad
+    text causalidad
+  }
+
+  class Auditoria {
+    bigint id PK
+    uuid usuario_id FK
+    text rol_codigo
+    text accion
+    text entidad
+    text entidad_id
+    text resultado
+    text hash
+    text hash_anterior
+  }
+
+  Rol "1" --> "*" Asignacion : define
+  Usuario "1" --> "*" Asignacion : recibe
+  Estudio "1" --> "*" Asignacion : autoriza
+  Estudio "1" --> "*" Sitio
+  Estudio "1" --> "*" Paciente
+  Sitio "1" --> "*" Paciente
+  Paciente "1" --> "1" IdentidadPaciente : identidad separada
+  Paciente "1" --> "*" CRD
+  Paciente "1" --> "*" Dosis
+  Paciente "1" --> "*" EventoAdverso
+  Usuario "1" --> "*" Auditoria : genera
+
+  note for Asignacion "Una asignación activa por usuario y estudio.<br/>Si el rol cambia, se revoca y se crea otra."
+  note for IdentidadPaciente "Vive fuera del CRD: el cuaderno solo conoce<br/>el código del paciente."
+  note for Auditoria "Append-only: la aplicación solo tiene INSERT y SELECT.<br/>Cadena SHA-256 con hash_anterior."

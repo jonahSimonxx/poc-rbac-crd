@@ -1,0 +1,61 @@
+@startuml
+' Diagrama de casos de uso del CRD de farmacovigilancia.
+!pragma layout smetana
+left to right direction
+skinparam defaultFontName "Segoe UI"
+skinparam shadowing false
+skinparam dpi 200
+skinparam usecase {
+  BackgroundColor #E6EEF4
+  BorderColor #1F6F8B
+  FontColor #12303F
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #A9BCCB
+}
+skinparam actor {
+  BackgroundColor #0F3D5C
+  BorderColor #0F3D5C
+  FontColor #12303F
+}
+
+actor "sys-admin" as A
+actor "jefe-estudio" as J
+actor "medico-investigador" as M
+
+rectangle "CRD de farmacovigilancia · ámbito por estudio" {
+  usecase "Gestionar usuarios\ny su estado" as U1
+  usecase "Asignar rol a un usuario\nen un estudio" as U2
+  usecase "Gestionar estudios y sitios" as U3
+  usecase "Leer auditoría administrativa" as U4
+
+  usecase "Consultar pacientes,\nCRD, dosis y eventos" as C1
+  usecase "Crear y editar CRD,\ndosis y eventos" as C2
+  usecase "Firmar un CRD" as C3
+  usecase "Anular con motivo" as C4
+  usecase "Leer la identidad\ndel paciente" as C5
+
+  usecase "Supervisar avance\ny equipo del estudio" as S1
+  usecase "Leer auditoría clínica\ndel estudio" as S2
+  usecase "Exportar datos del estudio" as S3
+}
+
+A --> U1
+A --> U2
+A --> U3
+A --> U4
+
+J --> C1
+J --> C5
+J --> S1
+J --> S2
+J --> S3
+
+M --> C1
+M --> C2
+M --> C3
+M --> C4
+M --> C5
+
+@enduml

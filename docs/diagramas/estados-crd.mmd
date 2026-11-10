@@ -1,0 +1,18 @@
+%% Ciclo de vida de un CRD: sin borrado clínico, solo anulación con motivo.
+stateDiagram-v2
+  direction LR
+  [*] --> Borrador : crear (medico-investigador)
+  Borrador --> Firmado : firmar (medico-investigador)
+  Borrador --> Anulado : anular con motivo
+  Firmado --> Anulado : anular con motivo
+  Anulado --> [*]
+
+  note right of Firmado
+    Se registra usuario, rol y fecha.
+    Un CRD firmado no se edita.
+  end note
+
+  note right of Anulado
+    El registro se conserva.
+    No existe DELETE clínico.
+  end note
