@@ -1,0 +1,28 @@
+{
+  "name": "poc-rbac-crd",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "POC del motor de autorizacion RBAC para el CRD de farmacovigilancia",
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "next start",
+    "test": "node --test test/policy.test.ts test/scope.test.ts test/auditoria.test.ts",
+    "matriz": "node src/cli/matriz.ts",
+    "seed": "node db/seed/generate-seed.mjs"
+  },
+  "dependencies": {
+    "next": "^16.4.5",
+    "pg": "^8.23.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.0"
+  }
+}
